@@ -9,10 +9,10 @@ RUN go build -o ./test
 
 CMD ["./test"]
 
-# 2ND STAGE: copy first stage into 2nd build because it's more lightweight
-#FROM alpine:edge
-#
-#WORKDIR /app
-#COPY --from=builder /build/test ./test
-#
-#CMD ["/app/test"]
+# 2ND STAGE: copy first stage into 2nd build to make it lightweight
+FROM scratch
+
+WORKDIR /app
+COPY --from=builder /src/test ./test
+
+CMD ["/app/test"]
